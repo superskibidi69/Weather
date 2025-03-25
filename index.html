@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      background-color: #f4f4f9;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    background-image: url("Image/bg.png");
+    }
+
+    .container {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3), 
+              0 2px 4px rgba(0, 0, 0, 0.1); 
+  width: 400px;
+  text-align: center;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2); 
+}
+
+    input, button {
+      width: 80%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      box-sizing: border-box;
+      outline: none;
+      background-color: #ffffff;
+    }
+
+    button {
+      background-color: #1e4f7c;
+      color: rgb(255, 255, 255);
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+      border-radius: 20px;
+      width: 150px;
+      border-color: #001931;
+    }
+
+    button:hover {
+      background-color: #306c8f;
+    }
+
+    .weather-info {
+      margin-top: 20px;
+    }
+
+    .weather-info h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .weather-info img {
+      width: 80px;
+      margin-top: 10px;
+    }
+    h1{
+        color: rgb(255, 255, 255);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Weather App</h1>
+
+  <!-- Searchable input using datalist -->
+  <input list="cities" id="location" placeholder="Search for a city..." />
+  <datalist id="cities">
+    <!-- Add more cities to make the list long -->
+    <option value="London">
+    <option value="New York">
+    <option value="Tokyo">
+    <option value="Paris">
+    <option value="Karachi">
+    <option value="Beijing">
+    <option value="Mumbai">
+    <option value="Los Angeles">
+    <option value="Dubai">
+    <option value="Singapore">
+    <option value="Cairo">
+    <option value="Istanbul">
+    <option value="Seoul">
+    <option value="Moscow">
+    <option value="Jakarta">
+    <option value="Bangkok">
+    <option value="Lagos">
+    <option value="Dhaka">
+    <option value="Buenos Aires">
+    <option value="Rio de Janeiro">
+    <option value="Sydney">
+    <option value="Toronto">
+    <option value="Mexico City">
+    <option value="Berlin">
+    <option value="Madrid">
+    <option value="Rome">
+    <option value="Athens">
+    <option value="Lisbon">
+    <option value="Stockholm">
+    <option value="Oslo">
+    <option value="Helsinki">
+    <option value="Amsterdam">
+    <option value="Brussels">
+    <option value="Vienna">
+    <option value="Warsaw">
+    <option value="Budapest">
+    <option value="Prague">
+    <option value="Copenhagen">
+    <option value="Zurich">
+    <option value="Geneva">
+  </datalist>
+  <br><br><br>
+  <button onclick="getWeather()">Get Weather</button>
+  
+  <div class="weather-info" id="weather-info"></div>
+</div>
+
+<script>
+  async function getWeather() {
+    const location = document.getElementById('location').value;
+    if (!location) {
+      alert('Please select a city');
+      return;
+    }
+
+    const apiKey = 'Your APi Key'; // Your API key
+    const url = `Your API url`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Failed to fetch weather data');
+      
+      const data = await response.json();
+      
+      const weatherInfo = `
+        <h2>${data.location.name}, ${data.location.country}</h2>
+        <p>${data.current.temp_c}°C | ${data.current.condition.text}</p>
+        <img src="${data.current.condition.icon}" alt="${data.current.condition.text}" />
+      `;
+      
+      document.getElementById('weather-info').innerHTML = weatherInfo;
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+      document.getElementById('weather-info').innerHTML = `<p style="color: red;">Failed to load weather data. Please try again.</p>`;
+    }
+  }
+</script>
+
+</body>
+</html>
